@@ -6,10 +6,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :email
       t.string :first_name
       t.string :last_name
-      t.string :birthdate
-      t.string :date
-      t.string :birth_time
-      t.string :time
+      t.date :birthdate
+      t.time :birth_time
       t.string :birth_location
       t.string :avatar
       t.string :bio
