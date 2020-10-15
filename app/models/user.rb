@@ -1,12 +1,13 @@
 class User < ApplicationRecord
+    
     has_secure_password 
     validates :username, uniqueness: { case_sensitive: false }
 
-    has_many :followed_users, foreign_key: :follower_id, class_name: 'Follow'
-    has_many :followees, through: :followed_users 
+    has_many :follower_joins, class_name: "Follow", foreign_key: "followee_id"
+    has_many :followers, through: :follower_joins
     
-    has_many :following_users, foreign_key: :followee_id, class_name: 'Follow'
-    has_many :followers, through: :following_users
+    has_many :followee_joins, class_name: "Follow", foreign_key: "follower_id"
+    has_many :followees, through: :followee_joins
 
     has_many :messages, class_name: "Message", foreign_key: "recipient_id"
     has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"

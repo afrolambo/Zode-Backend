@@ -6,6 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.destroy_all 
+users = RestClient.get 'https://randomuser.me/api/?results=500'
 
-abe = User.create(username: 'abe', password: '123', email: 'abe@gmail.com', first_name: 'Abe', last_name: 'Eba', birthdate: '', birth_time: '', birth_location: '', avatar: '', bio: '')
+parsed_users = JSON.parse(users)
+
+resulting_users = parsed_users['results']
+
+resulting_users[0..100].each do |user|
+    User.create(username: user["login"]["username"], first_name: user["name"]["first"], last_name: user["name"]["last"], 
+        email: user["email"], password: user["login"]["password"], birthdate: user["dob"]["date"], 
+        avatar: user["picture"]["medium"], birth_time: user["dob"]["date"], birth_location: user["location"]["city"])
+end 
+
+puts "seeded"

@@ -1,4 +1,4 @@
-class ConversationsController < ApplicationController
+class Api::V1::ConversationsController < ApplicationController
     def index 
         conversations = Conversation.all 
         render json: conversations 
@@ -18,6 +18,6 @@ class ConversationsController < ApplicationController
     private 
 
     def conversation_params 
-        params.requires(conversation).permit(:title)
+        params.requires(:conversation).permit(:title)
     end 
 end

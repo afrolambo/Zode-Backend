@@ -4,11 +4,13 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :update]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
-      resources :conversations, only: [:index, :create]
-      resources :messages, only: [:create]
+      resources :conversations, only: [:index, :create, :show]
+      resources :messages, only: [:index, :create]
+
       post '/togglefollow', to: 'users#toggle_follow'
       get ':username/followers', to: 'users#followers'
       get ':username/followees', to: 'users#followees'
+      
       get ':usename', to: 'users#user_profile'
       post '/search', to: 'users#search'
       mount ActionCable.server => '/cable'

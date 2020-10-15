@@ -1,5 +1,7 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    # skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized
+
     
     def create 
         puts user_params
@@ -35,7 +37,7 @@ class Api::V1::UsersController < ApplicationController
 
     # User Profile and Follow Mechanics and MEssenger Mechanics vvvv
 
-    def user_profile_info(username)
+    def user_profile_details(username)
         user = User.find_by(username: username)
         user_hash = user.profile 
         user_hash[:follows_current_user] = user.is_following(current_user.id)
@@ -50,19 +52,19 @@ class Api::V1::UsersController < ApplicationController
     end 
 
     def followees 
-        followees = User.find_by(username: params[:username]).follow.map { |user| user.profile}
+        followees = User.find_by(username: params[:username]).followees.map { |user| user.profile}
         render json: followees 
     end 
 
     def user_profile 
-        render json: { user: user_profile_info(params[:username])}
+        render json: { user: user_profile_details(params[:username])}
     end 
 
     def toggle_follow
         user = User.find_by(username: toggle_follow_params[:username])
         unless user.is_followed_by(current_user.id)
             current_user.follow(user.id)
-            render json: user_profile_info(user.username)
+            render json: user_profile_details(user.username)
         else
             current_user.unfollow(user.id)
             render json: user_profile_details(user.username)
