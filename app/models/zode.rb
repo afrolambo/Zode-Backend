@@ -1,0 +1,2 @@
+class Zode < ApplicationRecord
+end

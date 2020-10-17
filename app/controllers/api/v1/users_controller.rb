@@ -17,8 +17,7 @@ class Api::V1::UsersController < ApplicationController
     def update
         user = User.find(params[:id])
         if user == current_user 
-            user.avatar = avatar_param[:avatar]
-            user.bio = bio_param[:bio]
+            user.update( info_params )
             user.save 
             render json: {user: user_profile_details(user.username)}
         else
@@ -33,6 +32,11 @@ class Api::V1::UsersController < ApplicationController
     def index 
         users = User.all 
         render json: users
+    end 
+
+    def user
+        user = User.find(params[:id])
+        render json: user
     end 
 
     # User Profile and Follow Mechanics and MEssenger Mechanics vvvv
@@ -78,16 +82,20 @@ class Api::V1::UsersController < ApplicationController
 
     private 
     def user_params
-        params.require(:user).permit(:username, :password, :email, :avatar, :first_name, :last_name, :bio, :birthdate, :birth_time, :birth_location)
+        params.require(:user).permit(:username, :password, :email, :avatar, :first_name, :last_name, :bio, :birthdate, :birth_time, :birth_location, :sign)
     end 
 
-    def avatar_param 
-        params.permit(:avatar)
+    # def avatar_param 
+    #     params.permit(:avatar)
+    # end 
+
+    def info_params
+        params.permit(:birthdate, :birth_time, :birth_location, :sign)
     end 
 
-    def bio_param
-        bio.permit(:bio)
-    end 
+    # def bio_param
+    #     bio.permit(:bio)
+    # end 
 
     def toggle_follow_params
         params.require(:user).permit(:username)

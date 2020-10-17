@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_212249) do
+ActiveRecord::Schema.define(version: 2020_10_17_050022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,29 @@ ActiveRecord::Schema.define(version: 2020_10_12_212249) do
     t.string "bio"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "sign"
+  end
+
+  create_table "zodes", force: :cascade do |t|
+    t.string "name"
+    t.string "symbol"
+    t.string "secret_wish"
+    t.string "dislikes", array: true
+    t.string "likes", array: true
+    t.string "bad_traits", array: true
+    t.string "good_traits", array: true
+    t.string "compatibility", array: true
+    t.string "motto"
+    t.string "about"
+    t.string "ruling_planet"
+    t.string "planet_info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "element"
+    t.string "cardinality"
+    t.string "symbol_img"
+    t.string "img"
+    t.string "sun_dates"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
