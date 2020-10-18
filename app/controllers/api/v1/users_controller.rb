@@ -34,15 +34,23 @@ class Api::V1::UsersController < ApplicationController
         render json: users
     end 
 
-    def user
+    def a_user
         user = User.find(params[:id])
         render json: user
     end 
 
-    # User Profile and Follow Mechanics and MEssenger Mechanics vvvv
+    def a_user_details(id)
+        user = User.find_by(id: id)
+        user_hash = user
+    end 
 
-    def user_profile_details(username)
-        user = User.find_by(username: username)
+    # User Profile and Follow Mechanics and MEssenger Mechanics vvvv
+    def user_profile 
+        render json: { user: user_profile_details(params[:id])}
+    end
+
+    def user_profile_details(id)
+        user = User.find_by(id: id)
         user_hash = user.profile 
         user_hash[:follows_current_user] = user.is_following(current_user.id)
         user_hash[:followed_by_current_user] = user.is_followed_by(current_user.id)
@@ -59,11 +67,7 @@ class Api::V1::UsersController < ApplicationController
         followees = User.find_by(username: params[:username]).followees.map { |user| user.profile}
         render json: followees 
     end 
-
-    def user_profile 
-        render json: { user: user_profile_details(params[:username])}
-    end 
-
+    
     def toggle_follow
         user = User.find_by(username: toggle_follow_params[:username])
         unless user.is_followed_by(current_user.id)

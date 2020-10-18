@@ -1,8 +1,5 @@
 class Api::V1::MessagesController < ApplicationController
-    def index
-        messages = Message.all 
-        render json: messages 
-    end 
+    skip_before_action :authorized
 
     def create 
         message = Message.new(message_params)

@@ -1,4 +1,6 @@
 class Api::V1::ConversationsController < ApplicationController
+    skip_before_action :authorized
+
     def index 
         conversations = Conversation.all 
         render json: conversations 
@@ -18,6 +20,6 @@ class Api::V1::ConversationsController < ApplicationController
     private 
 
     def conversation_params 
-        params.requires(:conversation).permit(:title)
+        params.require(:conversation).permit(:title, :sender_id)
     end 
 end

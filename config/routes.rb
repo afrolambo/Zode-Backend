@@ -11,14 +11,14 @@ Rails.application.routes.draw do
       resources :messages, only: [:index, :create]
 
       post '/togglefollow', to: 'users#toggle_follow'
-      get ':username/followers', to: 'users#followers'
-      get ':username/followees', to: 'users#followees'
+      get ':id/followers', to: 'users#followers'
+      get ':id/followees', to: 'users#followees'
 
       get '/zodiac/:name', to: 'zodes#find'
       get '/zodiac', to: 'zodes#index'
 
-      get 'users/:id', to: 'users#user'
-      get ':usename', to: 'users#user_profile'
+      get 'users/:id', to: 'users#a_user'
+      get ':id', to: 'users#user_profile'
       post '/search', to: 'users#search'
       mount ActionCable.server => '/cable'
       resources :follows
