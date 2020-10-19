@@ -16,10 +16,11 @@ class Api::V1::UsersController < ApplicationController
 
     def update
         user = User.find(params[:id])
+
         if user == current_user 
             user.update( info_params )
             user.save 
-            render json: {user: user_profile_details(user.username)}
+            render json: {user: user_profile_details(user.id)}
         else
             render json: {error: :unauthorized}
         end 
@@ -34,14 +35,19 @@ class Api::V1::UsersController < ApplicationController
         render json: users
     end 
 
-    def a_user
+    def get_user
         user = User.find(params[:id])
-        render json: user
+        render json: { user: a_user_details(params[:id]) } 
     end 
 
     def a_user_details(id)
         user = User.find_by(id: id)
-        user_hash = user
+        user_hash = user.profile
+        user_hash[:follows_current_user] = user.is_following(current_user.id)
+        user_hash[:followed_by_current_user] = user.is_followed_by(current_user.id)
+        user_hash[:is_current_user] = user == current_user 
+        user_hash
+
     end 
 
     # User Profile and Follow Mechanics and MEssenger Mechanics vvvv
@@ -69,7 +75,7 @@ class Api::V1::UsersController < ApplicationController
     end 
     
     def toggle_follow
-        user = User.find_by(username: toggle_follow_params[:username])
+        user = User.find_by(id: toggle_follow_params[:id])
         unless user.is_followed_by(current_user.id)
             current_user.follow(user.id)
             render json: user_profile_details(user.username)
@@ -102,7 +108,7 @@ class Api::V1::UsersController < ApplicationController
     # end 
 
     def toggle_follow_params
-        params.require(:user).permit(:username)
+        params.require(:user).permit(:id)
     end 
 
     def search_params

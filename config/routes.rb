@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       get '/zodiac/:name', to: 'zodes#find'
       get '/zodiac', to: 'zodes#index'
 
-      get 'users/:id', to: 'users#a_user'
+      get 'users/:id', to: 'users#get_user'
       get ':id', to: 'users#user_profile'
       post '/search', to: 'users#search'
       mount ActionCable.server => '/cable'
