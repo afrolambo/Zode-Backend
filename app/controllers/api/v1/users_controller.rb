@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
             @token = encode_token( user_id: user.id )
             render json: { user: user.profile, jwt: @token, ok: true}
         else 
-            render json: { errors: user.errors }
+            render json: { errors: user.errors.full_messages }
         end 
     end
 
@@ -24,6 +24,11 @@ class Api::V1::UsersController < ApplicationController
         else
             render json: {error: :unauthorized}
         end 
+    end 
+
+    def bio 
+        current_user.update(bio: params[:bio])
+        render json: current_user
     end 
 
     def profile 

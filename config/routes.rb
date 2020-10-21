@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :update ]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
+      patch '/bio', to: 'users#bio'
 
       resources :zodes, only: [:create, :index]
 

@@ -19,10 +19,12 @@ class ApplicationController < ActionController::API
                 JWT.decode(token, 'my_s3cr3t', true, algorithm: 'HS256')
                 # JWT.decode => [{ "beef"=>"steak" }, {"alg"=>"HS256" }]
             rescue JWT::DecodeError
-                nil 
+                render json: { error: "Invalid Request"}, status: unauthorized
             end 
         end 
     end 
+
+    
 
     def current_user
         if decoded_token
@@ -30,6 +32,7 @@ class ApplicationController < ActionController::API
             @user = User.find_by(id: user_id)
         end 
     end 
+
 
     def logged_in?
         !!current_user
