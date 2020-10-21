@@ -70,12 +70,12 @@ class Api::V1::UsersController < ApplicationController
     end 
 
     def followers 
-        followers = User.find_by(username: params[:username]).followers.map { |user| user.profile}
+        followers = User.find_by(id: params[:id]).followers.map { |user| user.profile}
         render json: followers
     end 
 
     def followees 
-        followees = User.find_by(username: params[:username]).followees.map { |user| user.profile}
+        followees = User.find_by(id: params[:id]).followees.map { |user| user.profile}
         render json: followees 
     end 
     
@@ -108,9 +108,9 @@ class Api::V1::UsersController < ApplicationController
         params.permit(:birthdate, :birth_time, :birth_location, :sign)
     end 
 
-    # def bio_param
-    #     bio.permit(:bio)
-    # end 
+    def bio_param
+        bio.permit(:bio)
+    end 
 
     def toggle_follow_params
         params.require(:user).permit(:id)
