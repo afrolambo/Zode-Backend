@@ -72,7 +72,7 @@ class Api::V1::UsersController < ApplicationController
     def followers 
         followers = User.find_by(id: params[:id]).followers.map { |user| user.profile}
         render json: followers
-    end 
+    end code
 
     def followees 
         followees = User.find_by(id: params[:id]).followees.map { |user| user.profile}
