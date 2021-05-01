@@ -1,24 +1,32 @@
-# README
+## Zodē (zo•dee) Backend
+This Single Web App was built with React.js on the [Frontend](https://github.com/afrolambo/Zode-Frontend-) and Ruby on Rails in the backend. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Frontend is [here](https://github.com/afrolambo/Zode-Frontend-) 
 
-Things you may want to cover:
+### Demo Video
 
-* Ruby version
+[Short Video Demo](https://www.loom.com/share/f9056811a4fd47e9ac1e7e9a4107af9a)
 
-* System dependencies
+### Link to site
 
-* Configuration
+Link to Site coming soon 
 
-* Database creation
+### User Story: 
 
-* Database initialization
+A user logs in/ creates an account (filling out a form to find unique zodiac sign and create unique account and password) 
 
-* How to run the test suite
+A user cliks on signs and sees all signs displayed in a greed. 
+  If a user clicks on a sign, they are taken to a show page where they can find out more about their sign and their signs compatibility to others 
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A user can go to their profile 
+  In their profile, users can: 
+    Edit and update their bio, 
+    Edit and update their birth information,
+    See how many followers they have,
+    See number of users they follow,
+    From followers and following list they can navigate to other user profiles 
+    
+A user can go to discover and search for other users. 
+  On other user profile pages, the current user can follow and unfollow other users 
+  
+A user can then log out when they are done using the Zode
